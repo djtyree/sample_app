@@ -20,7 +20,7 @@ group :assets do
   gem 'coffee-rails', '3.2.2'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  # gem 'therubyracer', :platforms => :ruby
+   gem 'therubyracer', :platforms => :ruby
 
   gem 'uglifier', '1.0.3'
 end
@@ -33,6 +33,7 @@ end
 
 group :test do
 	gem 'capybara', '1.1.2'
+	gem 'factory_girl_rails', '4.1.0'
 end
 
 # To use ActiveModel has_secure_password
