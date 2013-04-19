@@ -30,6 +30,8 @@ describe "AuthenticationPages" do
       before { sign_in user }
 
       it { should have_selector('title', text: user.name) }
+
+      it { should have_link('Users', href: users_path) }
       it { should have_link('Profile', href: user_path(user)) }
       it { should have_link('Settings', href: edit_user_path(user)) }
       it { should have_link('Sign Out', href: signout_path) }
@@ -68,6 +70,11 @@ describe "AuthenticationPages" do
           it { should have_selector('title', text: 'Sign in') }
         end
 
+        describe "visiting the user index page" do
+          before { visit users_path }
+          it { should have_selector('title', text: 'Sign in') }
+        end
+
         describe "submitting to the update action" do
           before { put user_path(user) }
           specify { response.should redirect_to(signin_path) }
@@ -91,6 +98,18 @@ describe "AuthenticationPages" do
         specify { response.should redirect_to(root_path) }
       end
 
+    end
+    
+    describe "as non-admin user" do
+      let(:user) { FactoryGirl.create(:user) }
+      let(:non_admin) { FactoryGirl.create(:user) }
+
+      before { sign_in non_admin }
+
+      describe "submitting a DELETE request to the Users#destroy action" do
+        before { delete user_path(user) }
+        specify { response.should redirect_to(root_path) }        
+      end
     end
   end
 end
